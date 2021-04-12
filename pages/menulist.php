@@ -3,46 +3,10 @@
   <h4 class="title"><span class="text"><strong>Menu List</strong></span></h4>
   <a class="btn btn-primary" href="index.php?p=menu">Add</a>
   <br>
-  <br>
-  <form method="POST">
-	<table>	
-	<tr>
-	<td>Category:</td>
-	<td>
-	<select name="cari_idcategory">
-	<option></option>
-	<?php
-		require_once('class.Category.php'); 
-		$objCategory = new Category(); 
-		$arrayResult = $objCategory->SelectAllCategory('','');
-
-		if(count($arrayResult) == 0){
-			echo '<option></option>';			
-		}else{	
-			foreach ($arrayResult as $dataCategory) {
-				echo "<option value='" . $dataCategory->id . "'>" . $dataCategory->nama . "</option>";
-				
-			}
-		}
-		?>
-	</select></td>
-	</tr>
-	<tr>
-	<td>Deskripsi Menu:</td>
-	<td><input type="text" name="cari_deskripsi"></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td><input type="submit" class="btn btn-warning" name="btnCari" value="Cari">
-	<input type="submit" class="btn btn-danger" name="btnReset" value="Reset">
-	</td>
-	</tr>
-	</table>
-  </form>
+  <br>  
 <table class="table">
 	<tr>
 	<th>No.</th>
-	<th>ID Menu</th>
 	<th>Kategori Menu</th>
 	<th>Nama Menu</th>	
 	<th style="width:250px">Deskripsi</th>
@@ -51,7 +15,7 @@
 	<th>Action</th>
 	</tr>	
 	<?php
-	require_once('class.Menu.php'); 
+	require_once('./class/class.Menu.php'); 
 		$cari_idcategory =0;
 		$cari_deskripsi = '';
 		$objMenu = new Menu(); 		
@@ -73,8 +37,7 @@
 			foreach ($arrayResult as $dataMenu) {
 				echo '<tr>';
 					echo '<td>'.$no.'</td>';	
-					echo '<td>'.$dataMenu->id.'</td>';	
-					echo '<td>'.$dataMenu->nama_kategori.'</td>';
+					echo '<td>'.$dataMenu->namacategory.'</td>';
 					echo '<td>'.$dataMenu->nama.'</td>';
 					echo '<td>'.$dataMenu->deskripsi.'</td>';
 					echo '<td>Rp '.number_format($dataMenu->harga,2,',','.').'</td>';

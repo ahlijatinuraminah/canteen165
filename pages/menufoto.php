@@ -1,19 +1,12 @@
 <?php 
-include "inc.koneksi.php";
-$id =0;
-$nama = '';
-$deskripsi = '';
-$idcategory = 0;
-$namakategori = 0;
-$harga = '';
-$foto = '';
-$sql = '';
-$message ='';
+
+require_once('./class/class.Menu.php'); 
+$objMenu = new Menu(); 
 
 if(isset($_POST['btnSubmit'])){	
+	$message ='';
     $isErrorFile = false;
 	$folder		= './upload/menu/';
-		//type file yang bisa diupload
 	$file_type	= array('jpg','jpeg','png','gif','bmp');
 	$max_size	= 1000000; // 1MB	
 	$file_name	= $_FILES['foto']['name'];
@@ -35,19 +28,16 @@ if(isset($_POST['btnSubmit'])){
 		echo "<script> alert('$message'); </script>";
 	}		
 	else{		
-		$id =  $_GET['id'];		
-		$isSuccessUpload = move_uploaded_file($_FILES['foto']['tmp_name'], $folder.$id.'.'.$extensi);				
+		$objMenu->id =  $_GET['id'];		
+		$isSuccessUpload = move_uploaded_file($_FILES['foto']['tmp_name'], $folder . $objMenu->id.'.'.$extensi);				
 		
-		if($isSuccessUpload){			
-			$sql = "UPDATE tblmenu SET 
-					Foto ='$id.$extensi'
-					WHERE IDMenu = $id";		
-			$message = 'Upload berhasil!';
-			
-			$result = mysql_query($sql) or die(mysql_error());
-			if($result){			
-				echo "<script> alert('$message'); </script>";
-				echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php?p=menulist_old">'; 				
+		if($isSuccessUpload){	
+			$objMenu->foto = $objMenu->id.'.'.$extensi;
+
+			$objMenu->UpdateFotoMenu();
+			if($objMenu->hasil){			
+				echo "<script> alert('".$objMenu->message."'); </script>";
+				echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php?p=menulist">'; 				
 			}
 			else
 				echo "<script> alert('Proses update gagal. Silakan ulangi'); </script>";			
@@ -57,19 +47,8 @@ if(isset($_POST['btnSubmit'])){
 	}		
 }
 else if(isset($_GET['id'])){	
-	$id =  $_GET['id'];
-	$queryOne = "SELECT a.*, b.nama as namakategori FROM tblmenu a, tblcategory b where a.IDCategory= b.IDCategory and IDMenu='$id'";
-	$resultOne = mysql_query($queryOne) or die(mysql_error());
-	
-	if(mysql_num_rows($resultOne) == 1){
-		$data = mysql_fetch_assoc($resultOne);
-		$nama = $data['Nama'];				
-		$deskripsi = $data['Deskripsi'];				
-		$idcategory = $data['IDCategory'];	
-		$namakategori = $data['namakategori'];	
-		$harga = $data['Harga'];	
-		$foto = $data['Foto'];	
-	}	
+	$objMenu->id = $_GET['id'];	
+	$objMenu->SelectOneMenu();
 }
 ?>
 <div class="container">  
@@ -80,31 +59,31 @@ else if(isset($_GET['id'])){
 	<tr>
 	<td>Kategori</td>
 	<td>:</td>
-	<td><?php echo $namakategori; ?></td>
+	<td><?php echo $objMenu->namacategory; ?></td>
 	</tr>	
 	<tr>
 	<tr>
 	<td>Nama</td>
 	<td>:</td>
-	<td><?php echo $nama; ?></td>
+	<td><?php echo $objMenu->nama; ?></td>
 	</tr>	
 	<tr>
 	<td>Deskripsi</td>
 	<td>:</td>
-	<td><?php echo $deskripsi; ?></td>
+	<td><?php echo $objMenu->deskripsi; ?></td>
 	</tr>	
 	<tr>
 	<td>Harga</td>
 	<td>:</td>
-	<td><?php echo $harga; ?></td>
+	<td><?php echo $objMenu->harga; ?></td>
 	</tr>	
 	<tr>
 	<td>Foto</td>
 	<td>:</td>
 	<td>
 	<?php 
-		if($foto !='')
-			echo "<img src='upload/menu/".$foto."' width='100px' height='100px'/>"; 
+		if($objMenu->foto !='')
+			echo "<img src='upload/menu/".$objMenu->foto."' width='100px' height='100px'/>"; 
 	?>
 	</td>
 	</tr>	
@@ -118,7 +97,7 @@ else if(isset($_GET['id'])){
 	<td></td>
 	<td></td>
 	<td><input type="submit" class="btn btn-primary" value="Save" name="btnSubmit">
-	    <a href="index.php?p=menulist_old" class="btn btn-primary">Cancel</a></td>
+	    <a href="index.php?p=menulist" class="btn btn-primary">Cancel</a></td>
 	</tr>	
 	</table>    
 </form>	

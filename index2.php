@@ -2,8 +2,6 @@
    if (!isset($_SESSION)) {
 		session_start();
 	}	
-
-	require "inc.koneksi.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,9 +45,9 @@
 							<li><a href="index.php?p=contact">Contact us</a></li>																			
 							<?php 
 							    							    
-								if(isset($_SESSION["role"]))
+								if(isset($_SESSION["Role"]))
 							    { 							
-									if($_SESSION["role"] == "admin")
+									if($_SESSION["Role"] == "admin")
 									{						
 							?>				   	
 										<li><a href="index.php?p=memberlist_old">Member</a></li>	
@@ -85,30 +83,32 @@
 			</div>
 		</div>
 		<div id="wrapper" class="container">
-
-		<div class="navbar-inner main-menu">	
+			<section class="navbar main-menu">
+				<div class="navbar-inner main-menu">	
 				<?php
-				if(isset($_SESSION["nama"])){
-					echo "Welcome,  <a href='index.php?p=editprofile'>" . $_SESSION["nama"]. "</a> as " . $_SESSION["role"];
+				if(isset($_SESSION["Nama"])){
+					echo "Welcome,  <a href='index.php?p=editprofile'>" . $_SESSION["Nama"]. "</a> as " . $_SESSION["Role"];
 				}
 				?>		
 					<nav id="menu" class="pull-right">
 					<ul>
 					<?php
-					require_once('./class/class.Category.php'); 		
-					
-					$objCategory = new Category(); 
-					$arrayResult = $objCategory->SelectAllCategory();
-
-					foreach ($arrayResult as $dataCategory) {
-						echo '<li><a href="index.php?p=products&id='.$dataCategory->id.'">'.$dataCategory->nama.'</a>';								
-						echo '</li>';	
-					}
+					include('inc.koneksi.php');		
+					$query = mysql_query("SELECT * FROM tblCategory ORDER BY IDCategory ASC") 
+							or die(mysql_error());
+					if(mysql_num_rows($query) >= 0){
+						$no = 1;	
+						while($data = mysql_fetch_assoc($query)){
+							echo '<li><a href="index.php?p=products&id='.$data['IDCategory'].'">'.$data['Nama'].'</a>';								
+							echo '</li>';	
+						$no++;	
+						}							
+					}					
 					?>	
 						</ul>
 					</nav>
 				</div>
-			
+			</section>
 			
 			<section id="content">
 			<div id="konten">
@@ -125,7 +125,7 @@
 						echo 'Halaman tidak ditemukan! :(';
 					}
 				} else {
-					include($pages_dir.'/home2.php');
+					include($pages_dir.'/home.php');
 				}
 				?>
 			</div>

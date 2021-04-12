@@ -1,48 +1,31 @@
 <?php 
-include "inc.koneksi.php";
-$id =0;
-$nama = '';
-$deskripsi = '';
+require_once('./class/class.Category.php'); 		
+
+$objCategory = new Category(); 
 
 if(isset($_POST['btnSubmit'])){	
-    $nama = $_POST['nama'];	
-	$deskripsi = $_POST['deskripsi'];	
-	$sql = '';
-	$message ='';
+	$objCategory->nama = $_POST['nama'];	
+    $objCategory->deskripsi = $_POST['deskripsi'];
 	
-	if(isset($_GET['id'])){
-		$id = $_GET['id'];
-		//query update
-		$sql = "UPDATE tblcategory SET Nama ='$nama',
-		        Deskripsi = '$deskripsi'
-				WHERE IDCategory = $id";
-		$message ='Data berhasil diubah!';
-	}else{
-		//query insert
-		$sql = "INSERT INTO tblcategory(Nama, Deskripsi) 
-				values ('$nama', '$deskripsi')";
-		$message ='Data berhasil ditambahkan!';	
-	}	
-				
-	$result = mysql_query($sql) or die(mysql_error());
-	if($result){
-		echo "<script> alert('$message'); </script>";
-		echo "<script>window.location = 'categorylist.php' </script>";
+	if(isset($_GET['id'])){		
+		$objCategory->id = $_GET['id'];
+		$objCategory->UpdateCategory();
+	}
+	else{	
+		$objCategory->AddCategory();
+	}			
+	
+	if($objCategory->hasil){
+		echo "<script> alert('".$objCategory->message."'); </script>";
+		echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php?p=categorylist">'; 				
 	}
 	else{
 		echo "<script> alert('Proses gagal. Silakan ulangi'); </script>";	
 	}			
-}else if(isset($_GET['id'])){  // cek apakah ada query string 'id'
-	$id = $_GET['id'];
-	
-	$sql1 = "SELECT * FROM tblcategory where IDCategory=".$id;
-	$result1 = mysql_query($sql1) or die(mysql_error());
-	
-	if(mysql_num_rows($result1) == 1){
-		$data1 = mysql_fetch_assoc($result1);					
-		$nama = $data1['Nama'];				
-		$deskripsi = $data1['Deskripsi'];				
-	}
+}
+else if(isset($_GET['id'])){	
+	$objCategory->id = $_GET['id'];	
+	$objCategory->SelectOneCategory();
 }
 ?>
 <div class="container">  
@@ -51,20 +34,15 @@ if(isset($_POST['btnSubmit'])){
     <form action="" method="post">
 	<table class="table" border="0">
 	<tr>
-	<td>ID Category</td>
-	<td>:</td>
-	<td><input type="text" disabled name="idcategory" value="<?php echo $id; ?>"></td>
-	</tr>	
-	<tr>
 	<td>Nama</td>
 	<td>:</td>
-	<td><input type="text" name="nama" value="<?php echo $nama; ?>"></td>
+	<td><input type="text" class="form-control" id="nama" name="nama" value="<?php echo $objCategory->nama; ?>"></td>
 	</tr>	
 	<tr>
 	<td>Deskripsi</td>
 	<td>:</td>
 	<td>
-	<textarea style="width:55%" name="deskripsi" rows="3" cols="19"><?php echo $deskripsi; ?></textarea></td>
+	<textarea style="width:55%" name="deskripsi" rows="3" cols="19"><?php echo $objCategory->deskripsi; ?></textarea></td>
 	</tr>	
 	<tr>
 	<td></td>

@@ -1,37 +1,24 @@
 <?php 
-include "inc.koneksi.php";
-$id =0;
-$nama = '';
-$deskripsi1 = '';
-$deskripsi2 = '';
-$foto ='';
-$currentfoto ='';
+
+require_once('./class/class.Banner.php'); 		
+$objBanner = new Banner(); 
 
 if(isset($_POST['btnSubmit'])){	
-    $nama = $_POST['nama'];
-    $deskripsi1 = $_POST['deskripsi1'];
-	$deskripsi2 = $_POST['deskripsi2'];
-	$currentfoto =$_POST['currentfoto'];	
+    $objBanner->nama = $_POST['nama'];
+    $objBanner->deskripsi1 = $_POST['deskripsi1'];
+	$objBanner->deskripsi2 = $_POST['deskripsi2'];
+	$objBanner->currentfoto =$_POST['currentfoto'];	
 	$message = '';
-	$sql ='';
-	
+		
 	if(isset($_GET['id'])){		
-		$id =  $_GET['id'];
-		$sql = "UPDATE tblbanner SET Nama = '$nama',
-				Deskripsi1 ='$deskripsi1',
-				Deskripsi2 = '$deskripsi2'
-				WHERE IDBanner = $id";
-		$message = 'Update berhasil!';
+		$objBanner->id = $_GET['id'];
+		$objBanner->UpdateBanner();
 	}
 	else{
-		$sql = "INSERT INTO tblbanner(Nama, Deskripsi1, Deskripsi2) 
-				values ('$nama', '$deskripsi1', '$deskripsi2')";
-		$message ='Data berhasil ditambahkan!';					
+		$objBanner->AddBanner();					
 	}	
-	$result = mysql_query($sql) or die(mysql_error());		
-	$id = mysql_insert_id();
-			
-	if(!$result){			
+		
+	if(!$objBanner->hasil){			
 		echo "<script> alert('Proses gagal. Silakan ulangi'); </script>";	
 		die();
 	}
@@ -63,9 +50,8 @@ if(isset($_POST['btnSubmit'])){
 			echo "<script> alert('$message'); </script>";
 		}
 		else{
-			$currentfoto = $id.'.'.$extensi;
-			
-			$isSuccessUpload = move_uploaded_file($_FILES['foto']['tmp_name'], $folder.$currentfoto);	
+			$objBanner->foto = $objBanner->id.'.'.$extensi;			
+			$isSuccessUpload = move_uploaded_file($_FILES['foto']['tmp_name'], $folder.$objBanner->foto);	
 			
 			if(!$isSuccessUpload){
 				echo "<script> alert('Upload error'); </script>";
@@ -74,15 +60,10 @@ if(isset($_POST['btnSubmit'])){
 		}
 	}
 		
-	if($isSuccessUpload){			
-		$sql = "UPDATE tblbanner 
-				SET Foto ='$currentfoto'
-				WHERE IDBanner = $id";
-		$message = 'Update berhasil!';
-			
-		$result = mysql_query($sql) or die(mysql_error());
-		if($result){			
-			echo "<script> alert('$message'); </script>";
+	if($isSuccessUpload){					 
+		$objBanner->UpdateFotoBanner();
+		if($objBanner->hasil){			
+			echo "<script> alert('$objBanner->message'); </script>";
 			echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php?p=bannerlist">'; 				
 		}
 		else
@@ -93,18 +74,8 @@ if(isset($_POST['btnSubmit'])){
 				
 }
 else if(isset($_GET['id'])){	
-	$id =  $_GET['id'];
-	$queryOne = "SELECT * FROM tblbanner WHERE IDBanner='$id'";
-	$resultOne = mysql_query($queryOne) or die(mysql_error());
-	
-	if(mysql_num_rows($resultOne) == 1){
-		
-		$data = mysql_fetch_assoc($resultOne);
-		$nama = $data['Nama'];		
-		$deskripsi1 = $data['Deskripsi1'];	
-		$deskripsi2 = $data['Deskripsi2'];	
-		$foto = $data['Foto'];	
-	}	
+	$objBanner->id = $_GET['id'];	
+	$objBanner->SelectOneBanner();
 }
 ?>
 
@@ -115,10 +86,10 @@ else if(isset($_GET['id'])){
 				<div class="span3">
 				<br/>
 					<?php 
-						if($foto !='')
-							echo "<img src='upload/banner/".$foto."' width='300px' height='350px'/>"; 
+						if($objBanner->foto !='')
+							echo "<img src='upload/banner/".$objBanner->foto."' width='300px' height='350px'/>"; 
 						else
-							echo "<img src='upload/banner/default.png' width='300px' height='350px'/>"; 
+							echo "<img src='upload/banner/default.jpg' width='300px' height='350px'/>"; 
 					?>								
 				</div>
 				<div class="span6">
@@ -128,23 +99,23 @@ else if(isset($_GET['id'])){
 					<tr>
 					<td>Nama</td>
 					<td>:</td>
-					<td><input type="text" class="form-control" id="nama" name="nama" value="<?php echo $nama; ?>"></td>
+					<td><input type="text" class="form-control" id="nama" name="nama" value="<?php echo $objBanner->nama; ?>"></td>
 					</tr>
 					<tr>
 					<td>Deskripsi1</td>
 					<td>:</td>
-					<td><input type="text" class="form-control" id="deskripsi1" name="deskripsi1" value="<?php echo $deskripsi1; ?>"></td>
+					<td><input type="text" class="form-control" id="deskripsi1" name="deskripsi1" value="<?php echo $objBanner->deskripsi1; ?>"></td>
 					</tr>
 					<tr>
 					<td>Deskripsi2</td>
 					<td>:</td>
-					<td><input type="text" class="form-control" id="deskripsi2" name="deskripsi2" value="<?php echo $deskripsi2; ?>"></td>
+					<td><input type="text" class="form-control" id="deskripsi2" name="deskripsi2" value="<?php echo $objBanner->deskripsi2; ?>"></td>
 					</tr>
 					<tr>
 					<td>Upload Foto</td>
 					<td>:</td>
 					<td><input type="file" class="form-control" id="foto" name="foto">
-						<input type="hidden" name="currentfoto" value="<?php echo $foto; ?>">	
+						<input type="hidden" name="currentfoto" value="<?php echo $objBanner->foto; ?>">	
 					</td>
 					</tr>		
 					<tr>

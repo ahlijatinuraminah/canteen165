@@ -1,24 +1,19 @@
 <?php
 if(isset($_GET['id'])){	
-	include "inc.koneksi.php";	
-	$id = $_GET['id'];
+	require_once('./class/class.Menu.php'); 		
+	$objMenu = new Menu(); 
+	$objMenu->id = $_GET['id'];
 	
-	$sqlCek = "SELECT IDMenu FROM tblMenu WHERE IDMenu=$id";    
-	$cek = mysql_query($sqlCek) or die(mysql_error());
-	
-	if(mysql_num_rows($cek) == 0){		
+	$objMenu->SelectOneMenu();
+	if($objMenu->hasil == false){		
 		echo '<script>window.history.back()</script>';	
 	}else{
-		$sqlDelete = "DELETE FROM tblmenu WHERE IDMenu=$id";
-		$del = mysql_query($sqlDelete);		
-		if($del){			
-			echo "<script> alert('Data berhasil dihapus!'); </script>";
-		}else{			
-			echo "<script> alert('Proses gagal!'); </script>";
-		}
+		$objMenu->DeleteMenu();
+		echo "<script> alert('".$objMenu->message."'); </script>";
 		echo "<script>window.location = 'index.php?p=menulist'</script>";			
 	}	
-}else{		
+}
+else{		
 	echo '<script>window.history.back()</script>';	
 }
 ?>

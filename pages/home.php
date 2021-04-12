@@ -31,17 +31,10 @@
 			</section>
 			<section class="main-content">
 				<div class="row">
-					<div class="span12">													
-						<div class="row">
-							<div class="span12">
-								<h4 class="title">
-									<span class="pull-left"><span class="text"><span class="line">New <strong>Products</strong></span></span></span>
-									
-								</h4>
-								<div id="myCarousel" class="myCarousel carousel slide">
-									<div class="carousel-inner">
-										<div class="active item">
-											<ul class="thumbnails">												
+				<h4 class="title">
+					<span class="pull-left"><span class="text"><span class="line">New <strong>Products</strong></span></span></span>
+				</h4>
+				<ul class="thumbnails">												
 											<?php
 											$query = mysql_query("SELECT a.*, b.nama as nama_kategori FROM tblmenu a, tblcategory b where a.idcategory=b.idcategory order by idmenu desc limit 4") 
 													or die(mysql_error());
@@ -61,12 +54,8 @@
 												}							
 											}					
 											?>	
-												
-										</div>										
-									</div>							
-								</div>
-							</div>						
-						</div>
+				</ul>	
+				</div>
 						<br/>						
 						<div class="row feature_box">						
 							<div class="span4">

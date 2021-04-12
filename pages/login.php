@@ -25,39 +25,37 @@
 	
   </div>
 </div>
-<script>
-getE
-</script>
+
 <?php // jika submit button diklik
   if(isset($_POST['btnLogin'])){
-	include "inc.koneksi.php";
+	require_once('./class/class.User.php'); 		
+	$objUser = new User(); 
 	
-    $email = $_POST['email'];
-	$password = $_POST['password'];
-	$sqlCek = "SELECT * FROM tbluser WHERE email='$email'";
-    
-	$cekEmail = mysql_query($sqlCek) or die(mysql_error());
-	if(mysql_num_rows($cekEmail) != 0){
-		$data = mysql_fetch_assoc($cekEmail);		
-		
-		if($email == $data['Email'] && $password == $data['Password']){
+    $objUser->email = $_POST['email'];
+	$objUser->password = $_POST['password'];
+
+	$cekEmail = $objUser->ValidateEmail($_POST['email']);
+    if($cekEmail){
+		if($objUser->email == $_POST['email'] && $objUser->password == $_POST['password']){
 			if (!isset($_SESSION)) {
 				session_start();
 			}		  
 		
-			$_SESSION["IDUser"]= $data['IDUser'];
-			$_SESSION["Role"]= $data['Role'];
-			$_SESSION["Nama"]= $data['Nama'];
+			$_SESSION["id"]= $objUser->id;
+			$_SESSION["role"]= $objUser->role;
+			$_SESSION["nama"]= $objUser->nama;
 			
-			echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';
+		//	echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';
 		}
 		else{
-			echo "<script> alert('Email dan password tidak match'); </script>";		
+			//echo "<script> alert('Email dan password tidak match'); </script>";		
 		}		
 	}
 	else{
-		echo "<script> alert('Email tidak terdaftar'); </script>";		  
-	} 
+		//echo "<script> alert('Email tidak terdaftar'); </script>";		  
+	}
+	
+	echo 'role:'. $objUser->role;
   }
 ?>
 
