@@ -12,6 +12,8 @@
 		private $tanggallahir='';
 		private $handphone='';
 		private $jeniskelamin='';
+		private $foto='';
+		private $currentfoto='';
 		private $hasil = false;
 		private $message ='';
 
@@ -28,7 +30,7 @@
 		}
 				
 		public function AddUser(){
-			$this->password ='123456';
+			
 			$sql = "INSERT INTO tbluser(nama, alamat, email, password, tempatlahir, tanggallahir, handphone, jeniskelamin) 
 		            values ('$this->nama', '$this->alamat', '$this->email', '$this->password', '$this->tempatlahir', '$this->tanggallahir', '$this->handphone', '$this->jeniskelamin')";
 			$this->hasil = mysqli_query($this->connection, $sql);
@@ -47,7 +49,8 @@
 					tempatlahir = '$this->tempatlahir',
 					tanggallahir = '$this->tanggallahir',
 					handphone = '$this->handphone',
-					jeniskelamin = '$this->jeniskelamin'
+					jeniskelamin = '$this->jeniskelamin',
+					foto = '$this->foto'
 					WHERE id = $this->id";
 			$this->hasil = mysqli_query($this->connection, $sql);
 			
@@ -85,6 +88,7 @@
 					$objUser->tanggallahir=$data['tanggallahir'];
 					$objUser->handphone=$data['handphone'];
 					$objUser->jeniskelamin=$data['jeniskelamin'];
+					$objUser->foto=$data['foto'];
 					$arrResult[$cnt] = $objUser;
 					$cnt++;
 				}
@@ -98,6 +102,7 @@
 			if(mysqli_num_rows($resultOne) == 1){
 				$this->hasil = true;
 				$data = mysqli_fetch_assoc($resultOne);
+				$this->id=$data['id'];
 				$this->nama = $data['nama'];				
 				$this->alamat = $data['alamat'];			
 				$this->handphone=$data['handphone'];		
@@ -107,6 +112,7 @@
 				$this->tempatlahir=$data['tempatlahir'];
 				$this->tanggallahir=$data['tanggallahir'];				
 				$this->jeniskelamin=$data['jeniskelamin'];		
+				$this->foto=$data['foto'];
 			}							
 		}
 
@@ -117,6 +123,7 @@
 			if(mysqli_num_rows($resultOne) == 1){
 				$this->hasil = true;
 				$data = mysqli_fetch_assoc($resultOne);
+				$this->id=$data['id'];
 				$this->nama = $data['nama'];				
 				$this->alamat = $data['alamat'];			
 				$this->handphone=$data['handphone'];		

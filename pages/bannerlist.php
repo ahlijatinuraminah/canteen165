@@ -30,7 +30,7 @@
 					echo '<td>'.$dataBanner->nama.'</td>';
 					echo '<td>'.$dataBanner->deskripsi1.'</td>';
 					echo '<td>'.$dataBanner->deskripsi2.'</td>';
-					echo "<td><img src='upload/banner/".$dataBanner->foto."' width='100px' height='100px'/></td>";
+					echo "<td><img src='upload/banner/".$dataBanner->foto."' width='250px' height='100px'/></td>";
 					echo '<td><a class="btn btn-warning"  href="index.php?p=banner&id='.$dataBanner->id.'">Edit</a> |
    					          <a class="btn btn-danger"  href="index.php?p=deletebanner&id='.$dataBanner->id.'" 
 							  onclick="return confirm(\'Apakah anda yakin ingin menghapus?\')">Delete</a></td>';	

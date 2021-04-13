@@ -7,11 +7,12 @@ if(isset($_POST['btnSubmit'])){
 	
     $objUser->nama = $_POST['nama'];
     $objUser->email = $_POST['email'];
+	$objUser->password ='123456';
 	$objUser->alamat = $_POST['alamat'];
 	$objUser->tempatlahir = $_POST['tempatlahir'];	
 	$objUser->tanggallahir = $_POST['tanggallahir'];
 	$objUser->handphone = $_POST['handphone'];
-	$objUser->jeniskelamin =$_POST['jenisKelamin'];
+	$objUser->jeniskelamin =$_POST['jeniskelamin'];
 	
 	if(isset($_GET['id'])){
 		$objUser->id = $_GET['id'];

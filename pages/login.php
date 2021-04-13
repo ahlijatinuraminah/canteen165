@@ -1,5 +1,5 @@
 <div class="container">  
-<div class="span7">			
+<div class="span5">			
   <h2>Sign In</h2>
     <form action="" method="post">
 	<table class="table" width="80%">	
@@ -41,21 +41,21 @@
 				session_start();
 			}		  
 		
-			$_SESSION["id"]= $objUser->id;
+			$_SESSION["iduser"]= $objUser->id;
 			$_SESSION["role"]= $objUser->role;
 			$_SESSION["nama"]= $objUser->nama;
 			
-		//	echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';
+			echo "<script> alert('Login sukses'); </script>";		
+			echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';
 		}
 		else{
-			//echo "<script> alert('Email dan password tidak match'); </script>";		
+			echo "<script> alert('Email dan password tidak match'); </script>";		
 		}		
 	}
 	else{
-		//echo "<script> alert('Email tidak terdaftar'); </script>";		  
+		echo "<script> alert('Email tidak terdaftar'); </script>";		  
 	}
 	
-	echo 'role:'. $objUser->role;
   }
 ?>
 

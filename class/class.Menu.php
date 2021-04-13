@@ -91,7 +91,28 @@
 				$objMenu = new Menu(); 
 				$objMenu->id=$data['id'];
 				$objMenu->nama=$data['nama'];
+				$objMenu->idcategory=$data['idcategory'];
 				$objMenu->namacategory=$data['namacategory'];
+				$objMenu->deskripsi=$data['deskripsi'];
+				$objMenu->harga=$data['harga'];
+				$objMenu->foto=$data['foto'];
+				$arrResult[$cnt] = $objMenu;
+				$cnt++;
+			}
+			return $arrResult;			
+		}
+
+		public function SelectAllMenuInCart($arrayincart){
+			$sql = 'SELECT * FROM tblmenu WHERE id IN (' . $arrayincart . ')';						
+			$result = mysqli_query($this->connection, $sql);
+			$arrResult = Array();
+			$cnt=0;
+			while ($data = mysqli_fetch_array($result))
+			{
+				$objMenu = new Menu(); 
+				$objMenu->id=$data['id'];
+				$objMenu->nama=$data['nama'];
+				$objMenu->idcategory=$data['idcategory'];
 				$objMenu->deskripsi=$data['deskripsi'];
 				$objMenu->harga=$data['harga'];
 				$objMenu->foto=$data['foto'];

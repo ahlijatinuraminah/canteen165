@@ -1,7 +1,11 @@
 <?php
 	
-require_once('html2pdf/html2pdf.class.php');
-require_once('class.User.php'); 
+	require './../inc.koneksi.php';
+    require './../class/class.User.php';
+	require_once dirname(__FILE__).'/../vendor/autoload.php';
+	
+		use Spipu\Html2Pdf\Html2Pdf;
+
 
 //tampilkan data
 $judul = 'LAPORAN DATA MEMBER';

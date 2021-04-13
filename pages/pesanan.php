@@ -1,15 +1,16 @@
 <?php 
-require_once('class.Pesanan.php'); 
+require_once('./class/class.Pesanan.php'); 
+require_once('./class/class.User.php'); 
+require_once('./class/class.Mail.php'); 
+require_once('./class/class.DetailPesanan.php'); 
+$objPesanan = new Pesanan(); 		
 
-$objPesanan = new Pesanan(); 
 
 if(isset($_POST['btnSubmit'])){	
-	$objPesanan->idmenu = $_POST['idmenu'];	
-    $objPesanan->quantity = $_POST['quantity'];	
-	$objPesanan->harga = $_POST['harga'];
-	$objPesanan->totalharga = $objPesanan->quantity * $objPesanan->harga;
+	$objPesanan->id = $_GET['id'];	
+	$objPesanan->SelectOnePesanan();
 	$objPesanan->status = $_POST['status'];
-	
+		
 	if(isset($_GET['id'])){		
 		$objPesanan->id = $_GET['id'];
 		$objPesanan->UpdatePesanan();
@@ -19,6 +20,32 @@ if(isset($_POST['btnSubmit'])){
 	}			
 	
 	if($objPesanan->hasil){
+
+		$objUser = new User(); 	
+		$objUser->id = $objPesanan->iduser;
+		$objUser->SelectOneUser();
+
+		$message =  file_get_contents('templateemail.html');  					 
+		$header = "Status Pesanan ID " . $objPesanan->id;
+		$body = '<span style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #57697e;">
+				Status Pesanan Anda telah diupdate menjadi '.$objPesanan->status.' pada sistem Canteen 165.<br>
+				Berikut ini informasi pesanan Anda:<br>
+				</span>
+				<span style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #57697e;">
+					ID Pesanan : '.$objPesanan->id.'<br>
+					Tanggal Transaksi : '.$objPesanan->tanggaltransaksi.'<br>
+					Total Harga : '.$objPesanan->totalharga.'<br>
+				</span>';
+		$footer ='Silakan login untuk mengakses sistem';
+									
+		$message = str_replace("#header#",$header,$message);
+		$message = str_replace("#body#",$body,$message);
+		$message = str_replace("#footer#",$footer,$message);
+										 
+		
+		Mail::SendMail($objUser->email, $objUser->name, 'Status Pesanan ID ' . $objPesanan->id, $message);	
+
+
 		echo "<script> alert('$objPesanan->message'); </script>";
 		echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php?p=pesananlist">'; 				
 	}
@@ -29,6 +56,10 @@ if(isset($_POST['btnSubmit'])){
 else if(isset($_GET['id'])){	
 	$objPesanan->id = $_GET['id'];	
 	$objPesanan->SelectOnePesanan();
+	$objDetailPesanan = new DetailPesanan(); 	
+	$objDetailPesanan->idpesanan = $objPesanan->id;
+	$arrayDetailPesanan = $objDetailPesanan->SelectAllDetailPesanan();
+
 }
 ?>
 <div class="container">  
@@ -38,43 +69,27 @@ else if(isset($_GET['id'])){
 	<table class="table" border="0">
 	<tr>
 	<td>Nama User:</td>
-	<td><?php echo $objPesanan->namauser;?></td>
+	<td><?php echo $objPesanan->namauser;?>	
+	</td>
 	</tr>
 	<tr>
 	<td>Tanggal Transaksi:</td>
-	<td><input type="date" name="tanggaltransaksi" value="<?php echo $objPesanan->tanggaltransaksi;?>"></td>
+	<td><?php echo $objPesanan->tanggaltransaksi;?></td>
 	</tr>
 	<tr>
-	<td>Menu:</td>
+	<td>Detail Pesanan:</td>
 	<td>
-	<select name="idmenu">
-	<option></option>
 	<?php
-		require_once('class.Menu.php'); 
-		$objMenu = new Menu(); 
-		$arrayResult = $objMenu->SelectAllMenu('','');
-
-		if(count($arrayResult) == 0){
-			echo '<option></option>';			
-		}else{	
-			foreach ($arrayResult as $dataMenu) {
-				if($dataMenu->id == $objPesanan->idmenu)					
-					echo "<option selected='true' value='" . $dataMenu->id . "'>" . $dataMenu->nama . "</option>";
-				else
-					echo "<option value='" . $dataMenu->id . "'>" . $dataMenu->nama . "</option>";
-			}
-		}
-		?>
-	</select></td>
+	echo '<ol>';
+	foreach ($arrayDetailPesanan as $dataDetailPesanan) {
+		echo '<li>'.$dataDetailPesanan->namamenu.'|&nbsp'.$dataDetailPesanan->quantity.'|&nbsp Rp'.number_format($dataDetailPesanan->subtotal,2,',','.').'</li>';
+	}
+	echo '</ol>';
+	?>
+	
+	</td>
 	</tr>
-	<tr>
-	<td>Harga Satuan:</td>
-	<td><input type="text" name="harga" value="<?php echo $objPesanan->harga;?>" readonly></td>
-	</tr>
-	<tr>
-	<td>Quantity:</td>
-	<td><input type="text" name="quantity" value="<?php echo $objPesanan->quantity;?>"></td>
-	</tr>
+	
 	<tr>
 	<td>Total Harga:</td>
 	<td><?php echo 'Rp '.number_format($objPesanan->totalharga,2,',','.');?></td>

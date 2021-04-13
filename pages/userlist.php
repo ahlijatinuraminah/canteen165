@@ -21,7 +21,8 @@
 	<th>Alamat</th>
 	<th>Tempat, Tanggal Lahir</th>
 	<th>Handphone</th>
-	<th>JenisKelamin</th>	
+	<th>Jenis Kelamin</th>	
+	<th>Foto</th>	
 	<th>Action</th>
 	</tr>	
 	<?php
@@ -43,6 +44,7 @@
 					echo '<td>'.$dataUser->tempatlahir.', '. date("j F Y", strtotime($dataUser->tanggallahir)).'</td>';
 					echo '<td>'.$dataUser->handphone.'</td>';
 					echo '<td>'.$dataUser->jeniskelamin.'</td>';
+					echo "<td><img src='upload/user/".$dataUser->foto."' width='50px' height='50px'/></td>";
 					echo '<td><a class="btn btn-warning" href="index.php?p=user&id='.$dataUser->id.'">Edit</a> |  
 							  <a class="btn btn-danger" href="index.php?p=deleteuser&id='.$dataUser->id.'" 
 							  onclick="return confirm(\'apakah anda yakin untuk menghapus?\')">Delete</a></td>';	
@@ -54,6 +56,6 @@
 	
 	?>
 </table>
-<a class="btn btn-success" href="index.php?p=report_memberlist">Download</a>   
+<a class="btn btn-success" href="pages/report_memberlist.php">Download</a>   
 </div>
 </div>

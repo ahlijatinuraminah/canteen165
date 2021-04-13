@@ -1,24 +1,23 @@
 <div class="container">  
 <div class="span11">					
-						<h4 class="title"><span class="text"><strong>Order</strong> History</span></h4>
-						<table class="table table-striped">
-							<thead>
-								<tr>									
-									<th>No.</th>
-									<th>ID Pesanan</th>
-									<th>Tanggal Transaksi</th>
-									<th>Nama User</th>
-									<th>Nama Menu</th>
-									<th>Harga Satuan</th>
-									<th>Quantity</th>
-									<th>Total Harga</th>
-									<th>Status</th>
-									<th>Action</th>
-								</tr>
-							</thead>
+	<h4 class="title"><span class="text"><strong>Order</strong> History</span></h4>
+	<table class="table table-striped">
+		<thead>
+		<tr>									
+			<th>No.</th>
+			<th>ID Pesanan</th>
+			<th>Tanggal Transaksi</th>			
+			<th>Nama User</th>
+			<th>Menu | Quantity | Harga</th>
+			<th>Total Harga</th>
+			<th>Status</th>
+			<th>Action</th>
+		</tr>
+		</thead>
 	<?php
 	
-		require_once('class.Pesanan.php'); 
+		require_once('./class/class.Pesanan.php'); 
+		require_once('./class/class.DetailPesanan.php'); 
 		$objPesanan = new Pesanan(); 		
 		$arrayResult = $objPesanan->SelectAllPesanan();
 
@@ -27,29 +26,35 @@
 		}else{	
 			$no = 1;	
 			foreach ($arrayResult as $dataPesanan) {
+				$objDetailPesanan = new DetailPesanan(); 	
+				$objDetailPesanan->idpesanan = $dataPesanan->id;
+				$arrayDetailPesanan = $objDetailPesanan->SelectAllDetailPesanan();
+
 				echo '<tr>';
-					echo '<td>'.$no.'</td>';	
-					echo '<td>'.$dataPesanan->id.'</td>';	
-					echo '<td>'.$dataPesanan->tanggaltransaksi.'</td>';	
-					echo '<td>'.$dataPesanan->namauser.'</td>';
-					echo '<td>'.$dataPesanan->namamenu.'</td>';
-					echo '<td>Rp '.number_format($dataPesanan->harga,2,',','.').'</td>';
-					echo '<td>'.$dataPesanan->quantity.'</td>';					
-					echo '<td>Rp '.number_format($dataPesanan->totalharga,2,',','.').'</td>';
-					echo '<td>'.$dataPesanan->status.'</td>';
-					echo '<td><a class="btn btn-warning" href="index.php?p=pesanan&id='.$dataPesanan->id.'">Edit</a>|
-							  <a class="btn btn-danger"  href="index.php?p=deletepesanan&id='.$dataPesanan->id.'" 
-							  onclick="return confirm(\'Apakah anda yakin ingin menghapus?\')">Delete</a> |
-							  <a class="btn btn-success" href="index.php?p=report_historypesanan&id='.$dataPesanan->id.'">Download</a>';	
-					echo '</tr>';				
+				echo '<td>'.$no.'</td>';	
+				echo '<td>'.$dataPesanan->id.'</td>';	
+				echo '<td>'.$dataPesanan->tanggaltransaksi.'</td>';	
+				echo '<td>'.$dataPesanan->namauser.'</td>';
+				echo '<td>';
+				echo '<ol>
+				';
+					foreach ($arrayDetailPesanan as $dataDetailPesanan) {
+						echo '<li>'.$dataDetailPesanan->namamenu.'|&nbsp'.$dataDetailPesanan->quantity.'|&nbsp'.$dataDetailPesanan->subtotal.'</li>';
+					}
+
+				echo '</ol>';
+				echo '</td>';
+				echo '<td>Rp '.number_format($dataPesanan->totalharga,2,',','.').'</td>';
+				echo '<td>'.$dataPesanan->status.'</td>';
+				echo '<td><a class="btn btn-warning" href="index.php?p=pesanan&id='.$dataPesanan->id.'">Proses Pesanan</a>';						  
+				echo '</tr>';				
 				
 				$no++;	
 			}
-		}
-	
+		}	
 	?>
 							
-						</table>			
-						<a class="btn btn-success" href="index.php?p=report_pesananlist">Download</a>   
-					</div>
+	</table>			
+		<a class="btn btn-success" href="pages/report_pesananlist.php">Download</a>   
+	</div>
 </div>

@@ -9,35 +9,26 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Bootstrap E-commerce Templates</title>
+		<title>Canteen 165 E-commerce</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
-		<!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
-		<!-- bootstrap -->
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">      
-		<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-		
-		<link href="themes/css/bootstrappage.css" rel="stylesheet"/>
-		
+		<link href="css/bootstrap.min.css" rel="stylesheet">      
+		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 		<!-- global styles -->
-		<link href="themes/css/flexslider.css" rel="stylesheet"/>
-		<link href="themes/css/main.css" rel="stylesheet"/>
+		<link href="css/flexslider.css" rel="stylesheet"/>
+		<link href="css/main.css" rel="stylesheet"/>
 
 		<!-- scripts -->
-		<script src="themes/js/jquery-1.7.2.min.js"></script>
-		<script src="bootstrap/js/bootstrap.min.js"></script>				
-		<script src="themes/js/superfish.js"></script>	
-		<script src="themes/js/jquery.scrolltotop.js"></script>
-		<!--[if lt IE 9]>			
-			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-			<script src="js/respond.min.js"></script>
-		<![endif]-->
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>		
+		<script src="js/superfish.js"></script>	
+		<script src="js/jquery.scrolltotop.js"></script>
 	</head>
     <body>		
-		<div id="top-bar" class="container">
+		<div id="top-bar" class="container">		
 			<div class="row">
 				<div class="span4">
-					<a href="index.php" class="logo pull-left"><img src="themes/images/logo.png" class="site_logo" alt=""></a>
+					<a href="index.php" class="logo pull-left"><img src="images/logo.png" class="site_logo" alt=""></a>
 				</div>
 				<div class="span8">
 					<div id="menu_user" class="account pull-right">
@@ -52,17 +43,17 @@
 									if($_SESSION["role"] == "admin")
 									{						
 							?>				   	
-										<li><a href="index.php?p=memberlist_old">Member</a></li>	
+										<li><a href="index.php?p=userlist">User</a></li>	
 										<li><a href="index.php?p=categorylist">Kategori</a></li>	
-										<li><a href="index.php?p=menulist_old">Menu</a></li>	
+										<li><a href="index.php?p=menulist">Menu</a></li>	
 										<li><a href="index.php?p=bannerlist">Banner</a></li>	
-										<li><a href="index.php?p=pesananlist_old">Pesanan</a></li>	
+										<li><a href="index.php?p=pesananlist">Pesanan</a></li>	
 							<?php 
 									}
 									else //member
 									{
 							?>							
-										<li><a href="index.php?p=history_pesanan">History Pesanan</a></li>	
+										<li><a href="index.php?p=historypesanan">History Pesanan</a></li>	
 										<li><a href="index.php?p=cart">Keranjang</a></li>	
 							<?php 
 									}							    
@@ -125,7 +116,7 @@
 						echo 'Halaman tidak ditemukan! :(';
 					}
 				} else {
-					include($pages_dir.'/home2.php');
+					include($pages_dir.'/home.php');
 				}
 				?>
 			</div>
@@ -168,8 +159,9 @@
 				<span>Copyright 2013 bootstrappage template  All right reserved.</span>
 			</section>
 		</div>
-		<script src="themes/js/common.js"></script>
-		<script src="themes/js/jquery.flexslider-min.js"></script>
+		
+		<script src="js/common.js"></script>
+		<script src="js/jquery.flexslider-min.js"></script>
 		<script type="text/javascript">
 			$(function() {
 				$(document).ready(function() {

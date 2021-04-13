@@ -1,189 +1,112 @@
-			<section class="header_text sub">
-				<h4><span>Check Out</span></h4>
-			</section>	
-			<form action="index.php?p=history" method="POST">
-			<section class="main-content">			
-				<div class="row">
-					<div class="span12">
-						<div class="accordion" id="accordion2">
-							<div class="accordion-group">
-								<div class="accordion-heading">
-									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Checkout Options</a>
-								</div>
-								<div id="collapseOne" class="accordion-body in collapse">
-									<div class="accordion-inner">
-										<div class="row-fluid">
-											<div class="span6">
-												<h4>New Customer</h4>
-												<p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
-												<form action="#" method="post">
-													<fieldset>
-														<label class="radio" for="register">
-															<input type="radio" name="account" value="register" id="register" checked="checked">Register Account
-														</label>
-														<label class="radio" for="guest">
-															<input type="radio" name="account" value="guest" id="guest">Guest Checkout
-														</label>
-														<br>
-														<button class="btn btn-inverse" data-toggle="collapse" data-parent="#collapse2">Continue</button>
-													</fieldset>
-												</form>
-											 </div>
-											 <div class="span6">
-												<h4>Returning Customer</h4>
-												<p>I am a returning customer</p>
-												<form action="#" method="post">
-													<fieldset>
-														<div class="control-group">
-															<label class="control-label">Username</label>
-															<div class="controls">
-																<input type="text" placeholder="Enter your username" id="username" class="input-xlarge">
-															</div>
-														</div>
-														<div class="control-group">
-															<label class="control-label">Password</label>
-															<div class="controls">
-															<input type="password" placeholder="Enter your password" id="password" class="input-xlarge">
-															</div>
-														</div>
-														<button class="btn btn-inverse">Continue</button>
-													</fieldset>
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="accordion-group">
-								<div class="accordion-heading">
-									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">Account &amp; Billing Details</a>
-								</div>
-								<div id="collapseTwo" class="accordion-body collapse">
-									<div class="accordion-inner">
-										<div class="row-fluid">
-											<div class="span6">
-												<h4>Your Personal Details</h4>
-												<div class="control-group">
-													<label class="control-label">First Name</label>
-													<div class="controls">
-														<input type="text" placeholder="" class="input-xlarge">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Last Name</label>
-													<div class="controls">
-														<input type="text" placeholder="" class="input-xlarge">
-													</div>
-												</div>					  
-												<div class="control-group">
-													<label class="control-label">Email Address</label>
-													<div class="controls">
-														<input type="text" placeholder="" class="input-xlarge">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Telephone</label>
-													<div class="controls">
-														<input type="text" placeholder="" class="input-xlarge">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Fax</label>
-													<div class="controls">
-														<input type="text" placeholder="" class="input-xlarge">
-													</div>
-												</div>
-											</div>
-											<div class="span6">
-												<h4>Your Address</h4>
-												<div class="control-group">
-													<label class="control-label">Company</label>
-													<div class="controls">
-														<input type="text" placeholder="" class="input-xlarge">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Company ID:</label>
-													<div class="controls">
-														<input type="text" placeholder="" class="input-xlarge">
-													</div>
-												</div>					  
-												<div class="control-group">
-													<label class="control-label"><span class="required">*</span> Address 1:</label>
-													<div class="controls">
-														<input type="text" placeholder="" class="input-xlarge">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Address 2:</label>
-													<div class="controls">
-														<input type="text" placeholder="" class="input-xlarge">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label"><span class="required">*</span> City:</label>
-													<div class="controls">
-														<input type="text" placeholder="" class="input-xlarge">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label"><span class="required">*</span> Post Code:</label>
-													<div class="controls">
-														<input type="text" placeholder="" class="input-xlarge">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label"><span class="required">*</span> Country:</label>
-													<div class="controls">
-														<select class="input-xlarge">
-															<option value="1">Afghanistan</option>
-															<option value="2">Albania</option>
-															<option value="3">Algeria</option>
-															<option value="4">American Samoa</option>
-															<option value="5">Andorra</option>
-															<option value="6">Angola</option>
-														</select>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label"><span class="required">*</span> Region / State:</label>
-													<div class="controls">
-														<select name="zone_id" class="input-xlarge">
-															<option value=""> --- Please Select --- </option>
-															<option value="3513">Aberdeen</option>
-															<option value="3514">Aberdeenshire</option>
-															<option value="3515">Anglesey</option>
-															<option value="3516">Angus</option>
-															<option value="3517">Argyll and Bute</option>
-														</select>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="accordion-group">
-								<div class="accordion-heading">
-									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Confirm Order</a>
-								</div>
-								<div id="collapseThree" class="accordion-body collapse">
-									<div class="accordion-inner">
-										<div class="row-fluid">
-												<label for="textarea" class="control-label">Comments</label>
-											<div class="control-group">
-												<div class="controls">
-													<textarea rows="3" id="textarea" class="span12"></textarea>
-												</div>
-											</div>									
-											<button class="btn btn-inverse pull-right" onclick="return alert('Terima kasih sudah berbelanja, pesanan anda akan segera diverifikasi oleh admin');">Confirm order</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>				
-					</div>
-				</div>
-			</section>		
-</form>			
-			
+<section class="header_text sub">
+	<h4><span>Check Out</span></h4>
+</section>	
+<section class="main-content">			
+	<div class="row">
+	<div class="span6">
+	<?php
+		if(!isset($_SESSION['iduser'])){
+			echo "Anda harus login atau register dulu";	
+			include "login.php";	
+	?>
+	</div>
+	<div class="span6">
+	<?php
+		include "register.php";	
+	}
+	?>
+	</div>		
+</div>
+</section>
+
+<?php 
+require_once('./class/class.User.php'); 
+require_once('./class/class.Menu.php'); 
+$objMenu = new Menu(); 
+$objUser = new User();
+$objUser->id = $_SESSION["iduser"];
+$objUser->SelectOneUser();
+
+?>
+  
+  <div class="row">
+	<div class="span8">
+	<h4 class="title"><span class="text"><strong>Data Pesanan</strong></span></h4>
+	<table class="table table-striped">
+			<thead>
+				<tr>					
+					<th>Image</th>
+					<th>Product Name</th>
+					<th>Quantity</th>
+					<th>Unit Price</th>					
+					<th>Sub Total</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+			$total = 0;
+			$products_in_cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
+			if ($products_in_cart) {
+				$arrayproductincart = implode(',', array_keys($products_in_cart));
+				$arraymenu = $objMenu->SelectAllMenuInCart($arrayproductincart);
+			}
+
+			if (empty($arraymenu)){
+                echo '<tr>
+                    <td colspan="5" style="text-align:center;">You have no products added in your Shopping Cart</td>
+                </tr>';
+			}
+            else{
+				foreach($arraymenu as $menu) {
+					$subtotal = $products_in_cart[$menu->id] * $menu->harga;
+					$total += $subtotal;
+					$_SESSION['totalharga'] = $total;
+					echo '<tr>';
+					echo '<td><a href="index.php?p=productdetail&id='.$menu->id.'"><img height="60" width="80" alt="" src="upload/menu/'.$menu->foto.'"></a></td>';
+					echo '<td><a href="index.php?p=productdetail&id='.$menu->id.'">'.$menu->nama.'</a></td>';
+					echo '<td>'.$products_in_cart[$menu->id].'</td>';	
+					echo '<td> Rp'.number_format($menu->harga,2,',','.').'</td>';
+					echo '<td> Rp'.number_format($subtotal,2,',','.').'</td>';
+					echo '</tr>';	
+				}
+			}
+
+			?>			
+			</tbody>
+		</table>	
+		<div class="cart-total right">
+			<h3><strong>Total</strong>: <?php echo number_format($total,2,',','.'); ?></h3><br>
+		</div>
+	</div>
+	<div class="span4">
+	<form action="index.php?p=simpanpesanan" method="post">
+	<table>	
+	<tr>
+	<td colspan="2"><h4 class="title"><span class="text"><strong>Data Pemesan</strong></span></h4></td>
+	</tr>
+	<tr>
+	<td>Nama:</td>
+	<td>
+	<input type="text" readonly value="<?php echo $objUser->nama; ?>"></td>
+	</tr>
+	<tr>
+	<td>Alamat:</td>
+	<td>
+	<input type="text" readonly value="<?php echo $objUser->alamat; ?>"></td>
+	</tr>
+	<tr>
+	<td>Handphone:</td>
+	<td>
+	<input type="text" readonly value="<?php echo $objUser->handphone; ?>"></td>
+	</tr>
+	<tr>		
+	</table>  
+	</div>			
+</div>
+<section class="header_text sub">
+<input type="submit" class="btn btn-primary" value="Submit Pesanan" name="btnSubmit">
+<a href="index.php" class="btn btn-primary">Cancel</a>
+</section>	
+</form>	
+
+
