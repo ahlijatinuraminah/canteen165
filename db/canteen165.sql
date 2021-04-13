@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2021 at 12:28 PM
+-- Generation Time: Apr 13, 2021 at 05:01 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `canteen165`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblaccount`
+--
+
+CREATE TABLE `tblaccount` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(30) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `password` varchar(30) NOT NULL,
+  `role` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tblaccount`
+--
+
+INSERT INTO `tblaccount` (`id`, `nama`, `email`, `password`, `role`) VALUES
+(1, 'Administrator', 'admin', 'admin', 'admin'),
+(2, 'Ahlijati Nuraminah', 'ahlijati.nuraminah@esqbs.ac.id', '12345678', 'pembeli'),
+(3, 'Ade', 'ahlijati.nuraminah@gmail.com', '12345678', 'pembeli');
 
 -- --------------------------------------------------------
 
@@ -84,12 +107,12 @@ CREATE TABLE `tbldetailpesanan` (
 --
 
 INSERT INTO `tbldetailpesanan` (`id`, `idpesanan`, `idmenu`, `quantity`) VALUES
-(3, 16, 12, 7),
-(4, 16, 16, 17),
-(5, 17, 12, 1),
-(6, 17, 11, 2),
-(7, 18, 26, 2),
-(8, 18, 18, 3);
+(1, 1, 15, 1),
+(2, 1, 24, 2),
+(3, 2, 27, 3),
+(4, 2, 21, 2),
+(5, 3, 26, 4),
+(6, 3, 15, 3);
 
 -- --------------------------------------------------------
 
@@ -131,12 +154,37 @@ INSERT INTO `tblmenu` (`id`, `nama`, `deskripsi`, `harga`, `idcategory`, `foto`)
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tblpembeli`
+--
+
+CREATE TABLE `tblpembeli` (
+  `id` int(11) NOT NULL,
+  `alamat` varchar(100) NOT NULL,
+  `tempatlahir` varchar(50) NOT NULL,
+  `tanggallahir` date NOT NULL,
+  `handphone` varchar(20) NOT NULL,
+  `jeniskelamin` varchar(10) NOT NULL,
+  `foto` varchar(20) NOT NULL,
+  `idaccount` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblpembeli`
+--
+
+INSERT INTO `tblpembeli` (`id`, `alamat`, `tempatlahir`, `tanggallahir`, `handphone`, `jeniskelamin`, `foto`, `idaccount`) VALUES
+(1, 'JakartaS', 'Jakarta', '2021-04-28', '08111222333', 'perempuan', '1.jpg', 2),
+(2, '', '', '0000-00-00', '', '', '', 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tblpesanan`
 --
 
 CREATE TABLE `tblpesanan` (
   `id` int(11) NOT NULL,
-  `iduser` int(11) NOT NULL,
+  `idpembeli` int(11) NOT NULL,
   `totalharga` int(11) NOT NULL,
   `tanggaltransaksi` date NOT NULL,
   `status` varchar(20) NOT NULL
@@ -146,53 +194,20 @@ CREATE TABLE `tblpesanan` (
 -- Dumping data for table `tblpesanan`
 --
 
-INSERT INTO `tblpesanan` (`id`, `iduser`, `totalharga`, `tanggaltransaksi`, `status`) VALUES
-(1, 25, 270000, '2016-05-24', 'Approve'),
-(2, 2, 0, '0000-00-00', 'Approve'),
-(3, 25, 68000, '0000-00-00', 'Approve'),
-(4, 26, 72000, '0000-00-00', 'Not Approve'),
-(5, 26, 810000, '2016-05-26', 'Not Approve'),
-(9, 26, 20000, '2021-04-13', 'Menunggu Persetujuan'),
-(16, 26, 201500, '2021-04-13', 'Approve'),
-(17, 28, 121500, '2021-04-13', 'Approve'),
-(18, 28, 99000, '2021-04-13', 'Not Approve'),
-(19, 28, 99000, '2021-04-13', 'Menunggu Persetujuan'),
-(20, 28, 99000, '2021-04-13', 'Menunggu Persetujuan');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbluser`
---
-
-CREATE TABLE `tbluser` (
-  `id` int(11) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `nama` varchar(50) NOT NULL,
-  `alamat` varchar(100) NOT NULL,
-  `tempatlahir` varchar(50) NOT NULL,
-  `tanggallahir` date NOT NULL,
-  `handphone` varchar(20) NOT NULL,
-  `jeniskelamin` varchar(10) NOT NULL,
-  `role` varchar(10) NOT NULL,
-  `foto` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbluser`
---
-
-INSERT INTO `tbluser` (`id`, `email`, `password`, `nama`, `alamat`, `tempatlahir`, `tanggallahir`, `handphone`, `jeniskelamin`, `role`, `foto`) VALUES
-(2, 'admin', 'admin', 'Administrator', 'jalan hr rasuna said', 'jakarta', '2000-03-02', '08111222333', 'laki-laki', 'admin', '2.png'),
-(21, 'ade.alam@alalam', '01010110', 'Ade', 'jakarta', '', '0000-00-00', '', '', '', ''),
-(25, 'ana@gmail.com', '123456', 'ana', 'jakarta', '', '0000-00-00', '', '', 'member', ''),
-(26, 'user@gmail.com', '123456', 'User Biasa', 'Jalan TB', 'Jakarta', '2021-04-27', '08171717', 'laki-laki', '', ''),
-(28, 'ahlijati.nuraminah@esqbs.ac.id', '12345678', 'Ahlijati Nuraminah', 'Jalan Panjang', 'Jakarta', '2021-04-16', '08111222333', 'perempuan', '', '28.jpeg');
+INSERT INTO `tblpesanan` (`id`, `idpembeli`, `totalharga`, `tanggaltransaksi`, `status`) VALUES
+(1, 1, 98000, '2021-04-13', 'Approve'),
+(2, 1, 117000, '2021-04-13', 'Menunggu Persetujuan'),
+(3, 2, 318000, '2021-04-13', 'Menunggu Persetujuan');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `tblaccount`
+--
+ALTER TABLE `tblaccount`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tblbanner`
@@ -212,7 +227,7 @@ ALTER TABLE `tblcategory`
 ALTER TABLE `tbldetailpesanan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idmenu` (`idmenu`),
-  ADD KEY `tbldetailpesanan_ibfk_1` (`idpesanan`);
+  ADD KEY `idpesanan` (`idpesanan`);
 
 --
 -- Indexes for table `tblmenu`
@@ -222,21 +237,28 @@ ALTER TABLE `tblmenu`
   ADD KEY `idcategory` (`idcategory`);
 
 --
+-- Indexes for table `tblpembeli`
+--
+ALTER TABLE `tblpembeli`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idaccount` (`idaccount`);
+
+--
 -- Indexes for table `tblpesanan`
 --
 ALTER TABLE `tblpesanan`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `iduser` (`iduser`);
-
---
--- Indexes for table `tbluser`
---
-ALTER TABLE `tbluser`
-  ADD PRIMARY KEY (`id`);
+  ADD KEY `iduser` (`idpembeli`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `tblaccount`
+--
+ALTER TABLE `tblaccount`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tblbanner`
@@ -254,7 +276,7 @@ ALTER TABLE `tblcategory`
 -- AUTO_INCREMENT for table `tbldetailpesanan`
 --
 ALTER TABLE `tbldetailpesanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tblmenu`
@@ -263,16 +285,16 @@ ALTER TABLE `tblmenu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
+-- AUTO_INCREMENT for table `tblpembeli`
+--
+ALTER TABLE `tblpembeli`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `tblpesanan`
 --
 ALTER TABLE `tblpesanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- AUTO_INCREMENT for table `tbluser`
---
-ALTER TABLE `tbluser`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -282,20 +304,14 @@ ALTER TABLE `tbluser`
 -- Constraints for table `tbldetailpesanan`
 --
 ALTER TABLE `tbldetailpesanan`
-  ADD CONSTRAINT `tbldetailpesanan_ibfk_1` FOREIGN KEY (`idpesanan`) REFERENCES `tblpesanan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbldetailpesanan_ibfk_2` FOREIGN KEY (`idmenu`) REFERENCES `tblmenu` (`id`);
+  ADD CONSTRAINT `tbldetailpesanan_ibfk_1` FOREIGN KEY (`idmenu`) REFERENCES `tblmenu` (`id`),
+  ADD CONSTRAINT `tbldetailpesanan_ibfk_2` FOREIGN KEY (`idpesanan`) REFERENCES `tblpesanan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tblmenu`
 --
 ALTER TABLE `tblmenu`
   ADD CONSTRAINT `tblmenu_ibfk_1` FOREIGN KEY (`idcategory`) REFERENCES `tblcategory` (`id`);
-
---
--- Constraints for table `tblpesanan`
---
-ALTER TABLE `tblpesanan`
-  ADD CONSTRAINT `tblpesanan_ibfk_2` FOREIGN KEY (`iduser`) REFERENCES `tbluser` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

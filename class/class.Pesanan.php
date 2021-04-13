@@ -3,9 +3,9 @@
 	class Pesanan extends Connection
 	{
 		private $id =0;
-		private $iduser = '';
+		private $idpembeli = '';
 		private $totalharga='';
-		private $namauser='';
+		private $namapembeli='';
 		private $tanggaltransaksi='';
 		private $status ='';
 		private $hasil = false;
@@ -24,8 +24,8 @@
 		}
 				
 		public function AddPesanan(){
-			$sql = "INSERT INTO tblpesanan(iduser, totalharga, status, tanggaltransaksi) 
-		            values ('$this->iduser', $this->totalharga, '$this->status', '$this->tanggaltransaksi'  )";
+			$sql = "INSERT INTO tblpesanan(idpembeli, totalharga, status, tanggaltransaksi) 
+		            values ('$this->idpembeli', $this->totalharga, '$this->status', '$this->tanggaltransaksi'  )";
 			$this->hasil = mysqli_query($this->connection, $sql);
 			$this->id = $this->connection->insert_id;	
 			
@@ -70,7 +70,7 @@
 		}
 		
 		public function SelectAllPesanan(){
-			$sql = "SELECT a.*, b.nama as namauser FROM tblpesanan a, tbluser b where a.iduser = b.id ORDER BY id ASC";
+			$sql = "SELECT a.*, c.nama as namapembeli FROM tblpesanan a JOIN  tblpembeli b ON a.idpembeli = b.id LEFT JOIN tblaccount c ON b.idaccount = c.id ORDER BY id ASC";
 			$result = mysqli_query($this->connection, $sql);	
 			$arrResult = Array();
 			$cnt=0;
@@ -79,9 +79,9 @@
 				{
 					$objPesanan = new Pesanan(); 
 					$objPesanan->id=$data['id'];
-					$objPesanan->iduser=$data['iduser'];
+					$objPesanan->idpembeli=$data['idpembeli'];
 					$objPesanan->totalharga=$data['totalharga'];
-					$objPesanan->namauser=$data['namauser'];
+					$objPesanan->namapembeli=$data['namapembeli'];
 					$objPesanan->tanggaltransaksi=$data['tanggaltransaksi'];
 					$objPesanan->status=$data['status'];
 					$arrResult[$cnt] = $objPesanan;
@@ -92,7 +92,7 @@
 		}
 		
 		public function SelectHistoryPesanan(){
-			$sql = "SELECT a.* FROM tblpesanan a where a.iduser='$this->iduser' ORDER BY id ASC";
+			$sql = "SELECT a.* FROM tblpesanan a where a.idpembeli='$this->idpembeli' ORDER BY id ASC";
 			$result = mysqli_query($this->connection, $sql);	
 			$arrResult = Array();
 			$cnt=0;
@@ -101,7 +101,7 @@
 				{
 					$objPesanan = new Pesanan(); 
 					$objPesanan->id=$data['id'];
-					$objPesanan->iduser=$data['iduser'];
+					$objPesanan->idpembeli=$data['idpembeli'];
 					$objPesanan->totalharga=$data['totalharga'];
 					$objPesanan->tanggaltransaksi=$data['tanggaltransaksi'];
 					$objPesanan->status=$data['status'];
@@ -115,15 +115,15 @@
 		
 		
 		public function SelectOnePesanan(){
-			$sql = "SELECT a.*, b.nama as namauser FROM tblpesanan a, tbluser b where a.iduser = b.id and a.id='$this->id'";
+			$sql = "SELECT a.*, c.nama as namapembeli FROM tblpesanan a JOIN  tblpembeli b ON a.idpembeli = b.id LEFT JOIN tblaccount c ON b.idaccount = c.id WHERE a.id='$this->id'";
 			$resultOne = mysqli_query($this->connection, $sql);	
 			if(mysqli_num_rows($resultOne) == 1){
 				$this->hasil = true;
 				$data = mysqli_fetch_assoc($resultOne);
 				$this->id=$data['id'];
-				$this->iduser = $data['iduser'];				
+				$this->idpembeli = $data['idpembeli'];				
 				$this->totalharga=$data['totalharga'];
-				$this->namauser=$data['namauser'];
+				$this->namapembeli=$data['namapembeli'];
 				$this->tanggaltransaksi=$data['tanggaltransaksi'];
 				$this->status=$data['status'];					
 					

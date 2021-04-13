@@ -7,7 +7,7 @@
 			<th>No.</th>
 			<th>ID Pesanan</th>
 			<th>Tanggal Transaksi</th>			
-			<th>Nama User</th>
+			<th>Nama Pembeli</th>
 			<th>Menu | Quantity | Harga</th>
 			<th>Total Harga</th>
 			<th>Status</th>
@@ -34,7 +34,7 @@
 				echo '<td>'.$no.'</td>';	
 				echo '<td>'.$dataPesanan->id.'</td>';	
 				echo '<td>'.$dataPesanan->tanggaltransaksi.'</td>';	
-				echo '<td>'.$dataPesanan->namauser.'</td>';
+				echo '<td>'.$dataPesanan->namapembeli.'</td>';
 				echo '<td>';
 				echo '<ol>
 				';

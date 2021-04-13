@@ -1,12 +1,17 @@
 <?php 
 require_once('./class/class.Pesanan.php'); 
-require_once('./class/class.User.php'); 	
+require_once('./class/class.Pembeli.php'); 
 require_once('./class/class.Mail.php'); 	
 $objPesanan = new Pesanan(); 		
 
 if(isset($_POST['btnSubmit'])){	
+
+	$objPembeli = new Pembeli(); 	
+	$objPembeli->id = $_SESSION['idpembeli'];
+	$objPembeli->SelectOnePembeli();
+
 	$objPesanan->status = "Menunggu Persetujuan";
-	$objPesanan->iduser = $_SESSION['iduser'];
+	$objPesanan->idpembeli = $objPembeli->id;
 	$objPesanan->totalharga = $_SESSION['totalharga'];
 	$objPesanan->tanggaltransaksi = date('Y-m-d');
 	$objPesanan->AddPesanan();
@@ -14,9 +19,7 @@ if(isset($_POST['btnSubmit'])){
 	if($objPesanan->hasil){
 		unset ($_SESSION["cart"]);
 
-		$objUser = new User(); 	
-		$objUser->id = $_SESSION['iduser'];
-		$objUser->SelectOneUser();
+		
 
 		$message =  file_get_contents('templateemail.html');  					 
 		$header = "Pesanan berhasil dibuat";
@@ -36,7 +39,7 @@ if(isset($_POST['btnSubmit'])){
 		$message = str_replace("#footer#",$footer,$message);
 										 
 		
-		Mail::SendMail($objUser->email, $objUser->name, 'Pesanan berhasil dibuat', $message);	
+		Mail::SendMail($objPembeli->email, $objPembeli->nama, 'Pesanan berhasil dibuat', $message);	
 	}
 }
 

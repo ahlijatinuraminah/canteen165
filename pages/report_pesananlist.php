@@ -16,7 +16,7 @@ $content.= '<table border="0">';
 $content.= 	'<tr>			
 			<th>ID Pesanan</th>
 			<th>Tanggal Transaksi</th>
-			<th>Nama User</th>
+			<th>Nama Pembeli</th>
 			<th>Total Harga</th>
 			<th>Status</th></tr>';
 
@@ -29,7 +29,7 @@ $content.= 	'<tr>
 						
 						$content.= '<td>'.$dataPesanan->id.'</td>';	
 						$content.= '<td>'.$dataPesanan->tanggaltransaksi.'</td>';
-						$content.= '<td>'.$dataPesanan->namauser.'</td>';
+						$content.= '<td>'.$dataPesanan->namapembeli.'</td>';
 						$content.= '<td>'.$dataPesanan->totalharga.'</td>';					
 						$content.= '<td>'.$dataPesanan->status.'</td>';					
 						$content.= '</tr>';				

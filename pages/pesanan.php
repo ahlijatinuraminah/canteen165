@@ -1,6 +1,6 @@
 <?php 
 require_once('./class/class.Pesanan.php'); 
-require_once('./class/class.User.php'); 
+require_once('./class/class.Pembeli.php'); 
 require_once('./class/class.Mail.php'); 
 require_once('./class/class.DetailPesanan.php'); 
 $objPesanan = new Pesanan(); 		
@@ -21,9 +21,9 @@ if(isset($_POST['btnSubmit'])){
 	
 	if($objPesanan->hasil){
 
-		$objUser = new User(); 	
-		$objUser->id = $objPesanan->iduser;
-		$objUser->SelectOneUser();
+		$objPembeli = new Pembeli(); 	
+		$objPembeli->id = $objPesanan->idpembeli;
+		$objPembeli->SelectOnePembeli();
 
 		$message =  file_get_contents('templateemail.html');  					 
 		$header = "Status Pesanan ID " . $objPesanan->id;
@@ -43,7 +43,7 @@ if(isset($_POST['btnSubmit'])){
 		$message = str_replace("#footer#",$footer,$message);
 										 
 		
-		Mail::SendMail($objUser->email, $objUser->name, 'Status Pesanan ID ' . $objPesanan->id, $message);	
+		Mail::SendMail($objPembeli->email, $objPembeli->nama, 'Status Pesanan ID ' . $objPesanan->id, $message);	
 
 
 		echo "<script> alert('$objPesanan->message'); </script>";
@@ -68,8 +68,8 @@ else if(isset($_GET['id'])){
     <form action="" method="post">
 	<table class="table" border="0">
 	<tr>
-	<td>Nama User:</td>
-	<td><?php echo $objPesanan->namauser;?>	
+	<td>Nama Pembeli:</td>
+	<td><?php echo $objPesanan->namapembeli;?>	
 	</td>
 	</tr>
 	<tr>

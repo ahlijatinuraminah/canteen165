@@ -12,7 +12,6 @@
 	<td>Password</td>
 	<td>:</td>
 	<td><input type="password" required class="form-control" name="password">
-	<input type="checkbox" name="showpass">Show Password
 	</td>
 	</tr>	
 	<tr>
@@ -28,22 +27,23 @@
 
 <?php // jika submit button diklik
   if(isset($_POST['btnLogin'])){
-	require_once('./class/class.User.php'); 		
-	$objUser = new User(); 
+	require_once('./class/class.Account.php'); 		
+	$objAccount = new Account(); 
 	
-    $objUser->email = $_POST['email'];
-	$objUser->password = $_POST['password'];
+    $objAccount->email = $_POST['email'];
+	$objAccount->password = $_POST['password'];
 
-	$cekEmail = $objUser->ValidateEmail($_POST['email']);
+	$cekEmail = $objAccount->ValidateEmail($_POST['email']);
     if($cekEmail){
-		if($objUser->email == $_POST['email'] && $objUser->password == $_POST['password']){
+		if($objAccount->email == $_POST['email'] && $objAccount->password == $_POST['password']){
 			if (!isset($_SESSION)) {
 				session_start();
 			}		  
 		
-			$_SESSION["iduser"]= $objUser->id;
-			$_SESSION["role"]= $objUser->role;
-			$_SESSION["nama"]= $objUser->nama;
+			$_SESSION["idaccount"]= $objAccount->id;
+			$_SESSION["idpembeli"]= $objAccount->idpembeli;
+			$_SESSION["role"]= $objAccount->role;
+			$_SESSION["nama"]= $objAccount->nama;
 			
 			echo "<script> alert('Login sukses'); </script>";		
 			echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';

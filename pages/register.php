@@ -4,7 +4,7 @@
     <form action="" method="post">
 	<table class="table" border="0">
 	<tr>
-	<td>Name</td>
+	<td>Nama</td>
 	<td>:</td>
 	<td><input type="text" class="form-control" id="nama" name="nama"></td>
 	</tr>
@@ -17,37 +17,7 @@
 	<td>Password</td>
 	<td>:</td>
 	<td><input type="password" class="form-control" id="password" name="password"></td>
-	</tr>
-	<tr>
-	<td>Templat Lahir</td>
-	<td>:</td>
-	<td><input type="text" class="form-control" id="tempatlahir" maxlength="50" name="tempatlahir"></td>
-	</tr>
-	<tr>
-	<td>Tanggal Lahir</td>
-	<td>:</td>
-	<td>		
-	<input type="date" class="form-control" id="tanggallahir" name="tanggallahir">	
-	</td>
 	</tr>	
-	<tr>
-	<td>Alamat</td>
-	<td>:</td>
-	<td><textarea style="width:55%" name="alamat" class="form-control" rows="3" cols="19"></textarea></td>
-	</tr>	
-	<tr>
-	<td>Handphone</td>
-	<td>:</td>
-	<td><input type="text" name="handphone">
-	</td>
-	</tr>	
-	<tr>
-	<td>Jenis Kelamin</td>
-	<td>:</td>
-	<td><input type="radio" name="jeniskelamin" value="laki-laki" text="">Laki-Laki</input>
-		<input type="radio" name="jeniskelamin" value="perempuan">Perempuan
-	</td>
-	</tr>		
 	<tr>
 	<td></td>
 	<td></td>
@@ -61,38 +31,38 @@
 </div>
 <?php // jika submit button diklik
   if(isset($_POST['btnSubmit'])){	
-	require_once('./class/class.User.php'); 	
+	require_once('./class/class.Account.php'); 	
 	require_once('./class/class.Mail.php'); 			
-	$objUser = new User(); 
+	require_once('./class/class.Pembeli.php'); 			
+	$objAccount = new Account(); 
 	
-	$objUser->nama = $_POST['nama'];
-    $objUser->email = $_POST['email'];
-	$objUser->password = $_POST['password'];
-	$objUser->alamat = $_POST['alamat'];
-	$objUser->tempatlahir = $_POST['tempatlahir'];	
-	$objUser->tanggallahir = $_POST['tanggallahir'];
-	$objUser->handphone = $_POST['handphone'];
-	$objUser->jeniskelamin =$_POST['jeniskelamin'];
-	$objUser->role ='member';
+	$objAccount->nama = $_POST['nama'];
+    $objAccount->email = $_POST['email'];
+	$objAccount->password = $_POST['password'];
+	$objAccount->role ='pembeli';
 				
-	$cekEmail = $objUser->ValidateEmail($_POST['email']);
+	$cekEmail = $objAccount->ValidateEmail($_POST['email']);
 	
 	if($cekEmail)	
 		echo "<script> alert('Email sudah terdaftar'); </script>";			
 	else{
-		$objUser->AddUser();		
+		$objAccount->AddAccount();		
 		
-		if($objUser->hasil){
+		if($objAccount->hasil){
+
+			$objPembeli = new Pembeli();
+			$objPembeli->idaccount = $objAccount->id;
+			$objPembeli->AddPembeli();
 
 			$message =  file_get_contents('templateemail.html');  					 
 			$header = "Registrasi berhasil";
 			$body = '<span style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #57697e;">
-					Selamat <b>' .$objUser->name.'</b>, anda telah terdaftar pada sistem Canteen 165.<br>
+					Selamat <b>' .$objAccount->nama.'</b>, anda telah terdaftar pada sistem Canteen 165.<br>
 					Berikut ini informasi account anda:<br>
 					</span>
 					<span style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #57697e;">
-						Username : '.$objUser->email.'<br>
-						Password : '.$objUser->password.'
+						Accountname : '.$objAccount->email.'<br>
+						Password : '.$objAccount->password.'
 					</span>';
 			$footer ='Silakan login untuk mengakses sistem';
 										
@@ -101,7 +71,7 @@
 			$message = str_replace("#footer#",$footer,$message);
 					 						
 			
-			Mail::SendMail($objUser->email, $objUser->name, 'Registrasi berhasil', $message);	
+			Mail::SendMail($objAccount->email, $objAccount->nama, 'Registrasi berhasil', $message);	
 			
 			echo "<script> alert('Anda berhasil mendaftar. Terima Kasih!'); </script>";			
 			echo "<script>window.location = 'index.php?p=login' </script>";

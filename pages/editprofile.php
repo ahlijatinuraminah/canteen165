@@ -1,21 +1,21 @@
 <?php 
 
-require_once('./class/class.User.php'); 		
-$objUser = new User(); 
+require_once('./class/class.Pembeli.php'); 		
+$objPembeli = new Pembeli(); 
 
 if(isset($_POST['btnSubmit'])){	
-	$objUser->id =  $_SESSION["iduser"];
-    $objUser->nama = $_POST['nama'];
-    $objUser->email = $_POST['email'];
-	$objUser->alamat = $_POST['alamat'];
-	$objUser->tempatlahir = $_POST['tempatlahir'];	
-	$objUser->tanggallahir = $_POST['tanggallahir'];
-	$objUser->handphone = $_POST['handphone'];
-	$objUser->jeniskelamin =$_POST['jeniskelamin'];	
-	$objUser->currentfoto =$_POST['currentfoto'];	
+	$objPembeli->id =  $_SESSION["idpembeli"];
+    //$objPembeli->nama = $_POST['nama'];
+    //$objPembeli->email = $_POST['email'];
+	$objPembeli->alamat = $_POST['alamat'];
+	$objPembeli->tempatlahir = $_POST['tempatlahir'];	
+	$objPembeli->tanggallahir = $_POST['tanggallahir'];
+	$objPembeli->handphone = $_POST['handphone'];
+	$objPembeli->jeniskelamin =$_POST['jeniskelamin'];	
+	$objPembeli->currentfoto =$_POST['currentfoto'];	
 	$message = '';
 	
-	$folder		= './upload/user/';
+	$folder		= './upload/pembeli/';
 		//type file yang bisa diupload
 	$file_type	= array('jpg','jpeg','png','gif','bmp');
 	$max_size	= 1000000; // 1MB	
@@ -42,17 +42,16 @@ if(isset($_POST['btnSubmit'])){
 			echo "<script> alert('$message'); </script>";
 		}
 		else{
-			$objUser->foto = $objUser->id.'.'.$extensi;
-			$isSuccessUpload = move_uploaded_file($_FILES['foto']['tmp_name'], $folder.$objUser->foto);							
+			$objPembeli->foto = $objPembeli->id.'.'.$extensi;
+			$isSuccessUpload = move_uploaded_file($_FILES['foto']['tmp_name'], $folder.$objPembeli->foto);							
 		}
 	}
 		
 	if($isSuccessUpload){			
-		$objUser->UpdateUser();
+		$objPembeli->UpdatePembeli();
 			
-		if($objUser->hasil){			
-			$_SESSION["nama"]= $objUser->nama;
-			echo "<script> alert('$objUser->message'); </script>";
+		if($objPembeli->hasil){						
+			echo "<script> alert('$objPembeli->message'); </script>";
 			echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php?p=editprofile">'; 				
 		}
 		else
@@ -62,9 +61,9 @@ if(isset($_POST['btnSubmit'])){
 		echo "<script> alert('Proses upload gagal. Silakan ulangi'); </script>";			
 				
 }
-else if(isset($_SESSION["iduser"])){		
-	$objUser->id = $_SESSION["iduser"];
-	$objUser->SelectOneUser();	
+else if(isset($_SESSION["idpembeli"])){		
+	$objPembeli->id = $_SESSION["idpembeli"];
+	$objPembeli->SelectOnePembeli();	
 }
 ?>
 
@@ -75,10 +74,10 @@ else if(isset($_SESSION["iduser"])){
 				<div class="span3">
 				<br/>
 					<?php 
-						if($objUser->foto !='')
-							echo "<img src='upload/user/".$objUser->foto."' width='300px' height='350px'/>"; 
+						if($objPembeli->foto !='')
+							echo "<img src='upload/pembeli/".$objPembeli->foto."' width='300px' height='350px'/>"; 
 						else
-							echo "<img src='upload/user/default.png' width='300px' height='350px'/>"; 
+							echo "<img src='upload/pembeli/default.png' width='300px' height='350px'/>"; 
 					?>								
 				</div>
 				<div class="span6">
@@ -88,48 +87,48 @@ else if(isset($_SESSION["iduser"])){
 					<tr>
 					<td>Name</td>
 					<td>:</td>
-					<td><input type="text" class="form-control" id="nama" name="nama" value="<?php echo $objUser->nama; ?>"></td>
+					<td><input type="text" class="form-control" readonly id="nama" name="nama" value="<?php echo $objPembeli->nama; ?>"></td>
 					</tr>
 					 <tr>
 					<td>E-mail</td>
 					<td>:</td>
-					<td><input type="text" class="form-control" id="email" readonly maxlength="50" name="email" value="<?php echo $objUser->email; ?>"></td>
+					<td><input type="text" class="form-control" readonly id="email" readonly maxlength="50" name="email" value="<?php echo $objPembeli->email; ?>"></td>
 					</tr>
 					<tr>
 					<td>Tempat Lahir</td>
 					<td>:</td>
 					<td>
-					<input type="text" class="form-control" id="tempatlahir" maxlength="20" name="tempatlahir" value="<?php echo $objUser->tempatlahir; ?>">	
+					<input type="text" class="form-control" id="tempatlahir" maxlength="20" name="tempatlahir" value="<?php echo $objPembeli->tempatlahir; ?>">	
 					</td>
 					</tr>
 					<tr>
 					<td>Tanggal Lahir</td>
 					<td>:</td>
-					<td><input type="date" class="form-control" id="tanggallahir" name="tanggallahir" value="<?php echo $objUser->tanggallahir; ?>">	</td>
+					<td><input type="date" class="form-control" id="tanggallahir" name="tanggallahir" value="<?php echo $objPembeli->tanggallahir; ?>">	</td>
 					</tr>	
 					<tr>
 					<td>Alamat</td>
 					<td>:</td>
-					<td><textarea style="width:55%" name="alamat" class="form-control" rows="3" cols="19"><?php echo $objUser->alamat; ?></textarea></td>
+					<td><textarea style="width:55%" name="alamat" class="form-control" rows="3" cols="19"><?php echo $objPembeli->alamat; ?></textarea></td>
 					</tr>	
 					<tr>
 					<td>Handphone</td>
 					<td>:</td>
-					<td><input type="text" name="handphone" value="<?php echo $objUser->handphone; ?>">
+					<td><input type="text" name="handphone" value="<?php echo $objPembeli->handphone; ?>">
 					</td>
 					</tr>	
 					<tr>
 					<td>Jenis Kelamin</td>
 					<td>:</td>
-					<td><input type="radio" name="jeniskelamin" value="laki-laki" <?php if($objUser->jeniskelamin == 'laki-laki') echo 'checked'; ?>>Laki-Laki</input>
-						<input type="radio" name="jeniskelamin" value="perempuan" <?php if($objUser->jeniskelamin == 'perempuan') echo 'checked'; ?>>Perempuan</input>
+					<td><input type="radio" name="jeniskelamin" value="laki-laki" <?php if($objPembeli->jeniskelamin == 'laki-laki') echo 'checked'; ?>>Laki-Laki</input>
+						<input type="radio" name="jeniskelamin" value="perempuan" <?php if($objPembeli->jeniskelamin == 'perempuan') echo 'checked'; ?>>Perempuan</input>
 					</td>
 					</tr>	
 					<tr>
 					<td>Upload Foto</td>
 					<td>:</td>
 					<td><input type="file" class="form-control" id="foto" name="foto">
-						<input type="hidden" name="currentfoto" value="<?php echo $objUser->foto; ?>">	
+						<input type="hidden" name="currentfoto" value="<?php echo $objPembeli->foto; ?>">	
 					</td>
 					</tr>		
 					<tr>

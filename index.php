@@ -43,7 +43,8 @@
 									if($_SESSION["role"] == "admin")
 									{						
 							?>				   	
-										<li><a href="index.php?p=userlist">User</a></li>	
+										<li><a href="index.php?p=accountlist">User</a></li>	
+										<li><a href="index.php?p=pembelilist">Pembeli</a></li>	
 										<li><a href="index.php?p=categorylist">Kategori</a></li>	
 										<li><a href="index.php?p=menulist">Menu</a></li>	
 										<li><a href="index.php?p=bannerlist">Banner</a></li>	

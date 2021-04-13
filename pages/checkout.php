@@ -5,7 +5,7 @@
 	<div class="row">
 	<div class="span6">
 	<?php
-		if(!isset($_SESSION['iduser'])){
+		if(!isset($_SESSION['idaccount'])){
 			echo "Anda harus login atau register dulu";	
 			include "login.php";	
 	?>
@@ -13,19 +13,19 @@
 	<div class="span6">
 	<?php
 		include "register.php";	
-	}
+	}else{
 	?>
 	</div>		
 </div>
 </section>
 
 <?php 
-require_once('./class/class.User.php'); 
+require_once('./class/class.Pembeli.php'); 
 require_once('./class/class.Menu.php'); 
 $objMenu = new Menu(); 
-$objUser = new User();
-$objUser->id = $_SESSION["iduser"];
-$objUser->SelectOneUser();
+$objPembeli = new Pembeli();
+$objPembeli->id = $_SESSION["idpembeli"];
+$objPembeli->SelectOnePembeli();
 
 ?>
   
@@ -87,17 +87,17 @@ $objUser->SelectOneUser();
 	<tr>
 	<td>Nama:</td>
 	<td>
-	<input type="text" readonly value="<?php echo $objUser->nama; ?>"></td>
+	<input type="text" readonly value="<?php echo $objPembeli->nama; ?>"></td>
 	</tr>
 	<tr>
 	<td>Alamat:</td>
 	<td>
-	<input type="text" readonly value="<?php echo $objUser->alamat; ?>"></td>
+	<input type="text" readonly value="<?php echo $objPembeli->alamat; ?>"></td>
 	</tr>
 	<tr>
 	<td>Handphone:</td>
 	<td>
-	<input type="text" readonly value="<?php echo $objUser->handphone; ?>"></td>
+	<input type="text" readonly value="<?php echo $objPembeli->handphone; ?>"></td>
 	</tr>
 	<tr>		
 	</table>  
@@ -108,5 +108,7 @@ $objUser->SelectOneUser();
 <a href="index.php" class="btn btn-primary">Cancel</a>
 </section>	
 </form>	
-
+<?php 
+	}
+?>
 
