@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2021 at 06:20 AM
+-- Generation Time: Apr 14, 2021 at 08:27 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.2.31
 
@@ -96,7 +96,6 @@ INSERT INTO `tblcategory` (`id`, `nama`, `deskripsi`) VALUES
 --
 
 CREATE TABLE `tbldetailpesanan` (
-  `id` int(11) NOT NULL,
   `idpesanan` int(11) NOT NULL,
   `idmenu` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
@@ -106,13 +105,13 @@ CREATE TABLE `tbldetailpesanan` (
 -- Dumping data for table `tbldetailpesanan`
 --
 
-INSERT INTO `tbldetailpesanan` (`id`, `idpesanan`, `idmenu`, `quantity`) VALUES
-(1, 1, 15, 1),
-(2, 1, 24, 2),
-(3, 2, 27, 3),
-(4, 2, 21, 2),
-(5, 3, 26, 4),
-(6, 3, 15, 3);
+INSERT INTO `tbldetailpesanan` (`idpesanan`, `idmenu`, `quantity`) VALUES
+(1, 15, 1),
+(1, 24, 2),
+(2, 21, 2),
+(2, 27, 3),
+(3, 15, 3),
+(3, 26, 4);
 
 -- --------------------------------------------------------
 
@@ -245,7 +244,7 @@ ALTER TABLE `tblcategory`
 -- Indexes for table `tbldetailpesanan`
 --
 ALTER TABLE `tbldetailpesanan`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`idpesanan`,`idmenu`),
   ADD KEY `idmenu` (`idmenu`),
   ADD KEY `idpesanan` (`idpesanan`);
 
@@ -297,12 +296,6 @@ ALTER TABLE `tblbanner`
 --
 ALTER TABLE `tblcategory`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `tbldetailpesanan`
---
-ALTER TABLE `tbldetailpesanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tblmenu`
