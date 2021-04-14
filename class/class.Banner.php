@@ -66,7 +66,7 @@
 		}
 		
 		public function DeleteBanner(){
-			$sql = "DELETE FROM tblBanner WHERE id=$this->id";
+			$sql = "DELETE FROM tblbanner WHERE id=$this->id";
 			$this->hasil = mysqli_query($this->connection, $sql);
 			
 			if($this->hasil)
@@ -76,7 +76,7 @@
 		}
 		
 		public function SelectAllBanner(){
-			$sql = "SELECT * FROM tblBanner";
+			$sql = "SELECT * FROM tblbanner";
 				
 			$result = mysqli_query($this->connection, $sql);	
 			$arrResult = Array();
@@ -98,7 +98,7 @@
 		}
 		
 		public function SelectOneBanner(){
-			$sql = "SELECT * FROM tblBanner WHERE id='$this->id'";
+			$sql = "SELECT * FROM tblbanner WHERE id='$this->id'";
 			$resultOne = mysqli_query($this->connection, $sql);	
 			if(mysqli_num_rows($resultOne) == 1){
 				$this->hasil = true;
