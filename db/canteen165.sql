@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2021 at 05:01 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.10
+-- Generation Time: Apr 14, 2021 at 06:20 AM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.2.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,17 +32,17 @@ CREATE TABLE `tblaccount` (
   `nama` varchar(30) NOT NULL,
   `email` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
-  `role` varchar(10) NOT NULL
+  `idrole` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tblaccount`
 --
 
-INSERT INTO `tblaccount` (`id`, `nama`, `email`, `password`, `role`) VALUES
-(1, 'Administrator', 'admin', 'admin', 'admin'),
-(2, 'Ahlijati Nuraminah', 'ahlijati.nuraminah@esqbs.ac.id', '12345678', 'pembeli'),
-(3, 'Ade', 'ahlijati.nuraminah@gmail.com', '12345678', 'pembeli');
+INSERT INTO `tblaccount` (`id`, `nama`, `email`, `password`, `idrole`) VALUES
+(1, 'Administrator', 'admin', 'admin', 1),
+(2, 'Ahlijati Nuraminah', 'ahlijati.nuraminah@esqbs.ac.id', '123456', 2),
+(3, 'Ade', 'ahlijati.nuraminah@gmail.com', '12345678', 2);
 
 -- --------------------------------------------------------
 
@@ -199,6 +199,25 @@ INSERT INTO `tblpesanan` (`id`, `idpembeli`, `totalharga`, `tanggaltransaksi`, `
 (2, 1, 117000, '2021-04-13', 'Menunggu Persetujuan'),
 (3, 2, 318000, '2021-04-13', 'Menunggu Persetujuan');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblrole`
+--
+
+CREATE TABLE `tblrole` (
+  `id` int(11) NOT NULL,
+  `role` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tblrole`
+--
+
+INSERT INTO `tblrole` (`id`, `role`) VALUES
+(1, 'admin'),
+(2, 'pembeli');
+
 --
 -- Indexes for dumped tables
 --
@@ -207,7 +226,8 @@ INSERT INTO `tblpesanan` (`id`, `idpembeli`, `totalharga`, `tanggaltransaksi`, `
 -- Indexes for table `tblaccount`
 --
 ALTER TABLE `tblaccount`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idrole` (`idrole`);
 
 --
 -- Indexes for table `tblbanner`
@@ -249,6 +269,12 @@ ALTER TABLE `tblpembeli`
 ALTER TABLE `tblpesanan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `iduser` (`idpembeli`);
+
+--
+-- Indexes for table `tblrole`
+--
+ALTER TABLE `tblrole`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -297,8 +323,20 @@ ALTER TABLE `tblpesanan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `tblrole`
+--
+ALTER TABLE `tblrole`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `tblaccount`
+--
+ALTER TABLE `tblaccount`
+  ADD CONSTRAINT `tblaccount_ibfk_1` FOREIGN KEY (`idrole`) REFERENCES `tblrole` (`id`);
 
 --
 -- Constraints for table `tbldetailpesanan`
