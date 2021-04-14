@@ -39,7 +39,7 @@
 	$objAccount->nama = $_POST['nama'];
     $objAccount->email = $_POST['email'];
 	$objAccount->password = $_POST['password'];
-	$objAccount->role ='pembeli';
+	$objAccount->idrole =2;
 				
 	$cekEmail = $objAccount->ValidateEmail($_POST['email']);
 	

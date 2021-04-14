@@ -1,14 +1,17 @@
 <?php 
 require_once('./class/class.Account.php'); 		
-
+require_once('./class/class.Role.php'); 
 $objAccount = new Account(); 
+		
+$objRole = new Role(); 
+$roleList = $objRole->SelectAllRole();
 
 if(isset($_POST['btnSubmit'])){	
 	
     $objAccount->nama = $_POST['nama'];
     $objAccount->email = $_POST['email'];
 	$objAccount->password ='123456';
-	$objAccount->role = $_POST['role'];
+	$objAccount->idrole = $_POST['idrole'];
 	
 	if(isset($_GET['id'])){
 		$objAccount->id = $_GET['id'];
@@ -56,9 +59,17 @@ else if(isset($_GET['id'])){
 	<td>Role</td>
 	<td>:</td>
 	<td>
-	<select name="role">
-	<option value="admin">Admin</option>
-	<option value="pembeli">Pembeli</option>
+	<select name="idrole">
+	<option value="">--Please select role--</option>
+		<?php		
+			foreach ($roleList as $role){ 								
+				if($objAccount->idrole == $role->id)				
+					echo '<option selected="true" value='.$role->id.'>'.$role->role.'</option>';
+				else
+					echo '<option value='.$role->id.'>'.$role->role.'</option>';
+			} 
+		?>	
+		</select>
 	</select>
 	</td>
 	</tr>	

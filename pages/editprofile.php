@@ -135,7 +135,7 @@ else if(isset($_SESSION["idpembeli"])){
 					<td></td>
 					<td></td>
 					<td><input type="submit" class="btn btn-primary" value="Save" name="btnSubmit">
-						<a href="index.php?p=memberlist" class="btn btn-primary">Cancel</a></td>
+						<a href="index.php" class="btn btn-primary">Cancel</a></td>
 					</tr>	
 					</table>    
 				</form>		

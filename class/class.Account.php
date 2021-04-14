@@ -8,6 +8,7 @@
 		private $email='';
 		private $password='';			
 		private $role='';	
+		private $idrole=0;	
 		private $hasil = false;
 		private $message ='';
 
@@ -41,7 +42,7 @@
 					SET nama = '$this->nama',
 					email = '$this->email',
 					password = '$this->password',
-					role = '$this->role'					
+					idrole = '$this->idrole'					
 					WHERE id = $this->id";
 			$this->hasil = mysqli_query($this->connection, $sql);
 			
@@ -62,7 +63,7 @@
 		}
 		
 		public function SelectAllAccount(){
-			$sql = "SELECT * FROM tblaccount ORDER BY id ASC";
+			$sql = "SELECT a.*, b.role FROM tblaccount a inner join tblrole b on a.idrole = b.id ORDER BY id ASC";
 			$result = mysqli_query($this->connection, $sql);	
 			$arrResult = Array();
 			$cnt=0;
@@ -74,6 +75,7 @@
 					$objAccount->nama=$data['nama'];
 					$objAccount->email=$data['email'];
 					$objAccount->password=$data['password'];			
+					$objAccount->idrole=$data['idrole'];
 					$objAccount->role=$data['role'];
 					$arrResult[$cnt] = $objAccount;
 					$cnt++;
@@ -92,13 +94,13 @@
 				$this->nama = $data['nama'];				
 				$this->email=$data['email'];
 				$this->password=$data['password'];			
-				$this->role=$data['role'];							
+				$this->idrole=$data['idrole'];							
 			}							
 		}
 
 
 		public function ValidateEmail($email){
-			$sql = "SELECT a.*, b.id as idpembeli FROM tblaccount a LEFT JOIN tblpembeli b ON a.id = b.idaccount WHERE email='$email'";    
+			$sql = "SELECT a.*, b.id as idpembeli, c.role FROM tblaccount a LEFT JOIN tblpembeli b ON a.id = b.idaccount JOIN tblrole c on a.idrole = c.id WHERE email='$email'";    
 			$resultOne = mysqli_query($this->connection, $sql);	
 			if(mysqli_num_rows($resultOne) == 1){
 				$this->hasil = true;
@@ -109,6 +111,7 @@
 				$this->email=$data['email'];
 				$this->password=$data['password'];			
 				$this->role=$data['role'];							
+				$this->idrole=$data['idrole'];							
 				return true;		
 			}							
 		}

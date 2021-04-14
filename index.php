@@ -44,6 +44,7 @@
 									{						
 							?>				   	
 										<li><a href="index.php?p=accountlist">User</a></li>	
+										<li><a href="index.php?p=rolelist">Role</a></li>	
 										<li><a href="index.php?p=pembelilist">Pembeli</a></li>	
 										<li><a href="index.php?p=categorylist">Kategori</a></li>	
 										<li><a href="index.php?p=menulist">Menu</a></li>	
